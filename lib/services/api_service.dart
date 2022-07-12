@@ -31,6 +31,22 @@ class ApiService {
     }).catchError((err) => print(err));
   }
 
+  Future<List<Product>> getProductsByCategory(String categoryName) {
+    return http
+        .get(Uri.parse('$baseUrl/products/category/$categoryName'))
+        .then((data) {
+      final products = <Product>[];
+      if (data.statusCode == 200) {
+        final jsonData = json.decode(data.body);
+
+        for (var product in jsonData) {
+          products.add(Product.fromJson(product));
+        }
+      }
+      return products;
+    }).catchError((err) => print(err));
+  }
+
   Future<List<String>> getAllCategories() {
     return http.get(Uri.parse('$baseUrl/products/categories')).then((data) {
       final categories = <String>[];
