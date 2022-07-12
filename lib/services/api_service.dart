@@ -1,11 +1,23 @@
 import 'dart:convert';
 
+import 'package:fake_store/models/user_login.dart';
 import 'package:fake_store/models/cart_update.dart';
 import 'package:fake_store/models/product.dart';
+
 import 'package:http/http.dart' as http;
 
 class ApiService {
   static const String baseUrl = 'https://fakestoreapi.com';
+
+  Future<dynamic> login(String username, String password) {
+    final credentials = UserLogin(username: username, password: password);
+    return http
+        .post(Uri.parse('$baseUrl/auth/login'), body: credentials.toJson())
+        .then((data) {
+      if (data.statusCode == 200) {
+        final jsonData = json.decode(data.body);
+        return jsonData;
+   }
 
   Future<List<Product>> getAllProducts() async {
     return http.get(Uri.parse('$baseUrl/products')).then((data) {
