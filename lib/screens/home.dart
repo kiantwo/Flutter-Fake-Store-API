@@ -58,7 +58,7 @@ class HomeScreen extends StatelessWidget {
                       height: 50,
                       width: 50,
                     ),
-                    subtitle: Text('${product.price}'),
+                    subtitle: Text('\$${product.price}'),
                     onTap: () {
                       Navigator.push(
                         context,
