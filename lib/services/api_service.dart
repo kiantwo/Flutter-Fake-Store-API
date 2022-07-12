@@ -4,6 +4,8 @@ import 'package:fake_store/models/cart_update.dart';
 import 'package:fake_store/models/product.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/cart.dart';
+
 class ApiService {
   static const String baseUrl = 'https://fakestoreapi.com';
 
@@ -58,6 +60,16 @@ class ApiService {
         }
       }
       return categories;
+    }).catchError((err) => print(err));
+  }
+
+  Future<Cart?> getCart(String id) {
+    return http.get(Uri.parse('$baseUrl/carts/$id')).then((data) {
+      if (data.statusCode == 200) {
+        final jsonData = json.decode(data.body);
+        return Cart.fromJson(jsonData);
+      }
+      return null;
     }).catchError((err) => print(err));
   }
 

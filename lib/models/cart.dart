@@ -2,7 +2,7 @@ class Cart {
   int id;
   int userId;
   DateTime date;
-  Map<int, dynamic> products;
+  List<dynamic> products;
 
   Cart({
     required this.id,
@@ -15,7 +15,7 @@ class Cart {
     return Cart(
       id: data['id'],
       userId: data['userId'],
-      date: data['date'],
+      date: DateTime.parse(data['date']),
       products: data['products'],
     );
   }
