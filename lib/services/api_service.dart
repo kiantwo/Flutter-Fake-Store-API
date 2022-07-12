@@ -6,6 +6,8 @@ import 'package:fake_store/models/product.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../models/cart.dart';
+
 class ApiService {
   static const String baseUrl = 'https://fakestoreapi.com';
 
@@ -73,6 +75,16 @@ class ApiService {
     }).catchError((err) => print(err));
   }
 
+  Future<Cart?> getCart(String id) {
+    return http.get(Uri.parse('$baseUrl/carts/$id')).then((data) {
+      if (data.statusCode == 200) {
+        final jsonData = json.decode(data.body);
+        return Cart.fromJson(jsonData);
+      }
+      return null;
+    }).catchError((err) => print(err));
+  }
+
   Future<void> updateCart(int cartId, int productId) {
     final cartUpdate =
         CartUpdate(userId: cartId, date: DateTime.now(), products: [
@@ -82,6 +94,15 @@ class ApiService {
         .put(Uri.parse('$baseUrl/carts/$cartId'),
             body: json.encode(cartUpdate.toJson()))
         .then((data) {
+      if (data.statusCode == 200) {
+        final jsonData = json.decode(data.body);
+        print(jsonData);
+      }
+    }).catchError((err) => print(err));
+  }
+
+  Future<void> deleteCart(String cartId) {
+    return http.delete(Uri.parse('$baseUrl/carts/$cartId')).then((data) {
       if (data.statusCode == 200) {
         final jsonData = json.decode(data.body);
         print(jsonData);
