@@ -10,10 +10,10 @@ class LoginScreen extends StatelessWidget {
   ApiService get service => GetIt.I<ApiService>();
 
   final TextEditingController nameCtrl = TextEditingController(
-    text: 'johnd',
+    text: 'mor_2314',
   );
   final TextEditingController passwordCtrl = TextEditingController(
-    text: 'm38rmF\$',
+    text: '83r5^_',
   );
 
   @override
